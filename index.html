@@ -83,7 +83,7 @@
 
 <body>
     <ul id="messages"></ul>
-    <i class="fa fa-trash" aria-hidden="true" id="trash"></i>
+    <!-- <i class="fa fa-trash" aria-hidden="true" id="trash"></i> -->
     <form action="">
         <input id="m" autocomplete="off" placeholder="Start typing..." />
         <button>
@@ -93,8 +93,6 @@
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-        var trash = $('#trash');
-        trash.hide();
 
         $(function () {
             var socket = io();
@@ -119,6 +117,18 @@
                 return;
             }
         });
+
+        function getAllRoomMembers(room, _nsp) {
+            var roomMembers = [];
+            var nsp = typeof _nsp !== "string" ? "/" : _nsp;
+
+            for (var member in io.nsps[nsp].adapter.rooms[room]) {
+                roomMembers.push(member);
+            }
+
+            console.log(roomMembers);
+        }
+
 
     </script>
 </body>
