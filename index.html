@@ -65,13 +65,15 @@
             display: none;
         }
 
-        @media screen and (max-width: 580px) {
+        @media screen and (max-width: 480px) {
             form button {
                 border: none;
                 width: inherit;
+                padding: 20px;
             }
             form input {
                 width: 100%;
+                padding: 25px;
             }
         }
     </style>
@@ -81,6 +83,7 @@
 
 <body>
     <ul id="messages"></ul>
+    <i class="fa fa-trash" aria-hidden="true" id="trash"></i>
     <form action="">
         <input id="m" autocomplete="off" placeholder="Start typing..." />
         <button>
@@ -90,6 +93,8 @@
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
+        var trash = $('#trash');
+        trash.hide();
 
         $(function () {
             var socket = io();
@@ -106,14 +111,12 @@
         });
 
         window.addEventListener('keydown', function (event) {
-            if (event.defaultPrevented) return;
             if (event.key === 'ArrowDown') {
                 var are_you_sure = confirm("Are you sure you want to clear all messages?");
                 if (are_you_sure) {
                     $('li').remove();
-                } else {
-                    return;
                 }
+                return;
             }
         });
 
