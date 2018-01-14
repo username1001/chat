@@ -1,0 +1,13 @@
+{
+  "name": "chat-app",
+  "version": "0.0.1",
+  "description": "chat application",
+  "dependencies": {
+    "express": "^4.15.2",
+    "nodemon": "^1.14.11",
+    "socket.io": "^1.7.4"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

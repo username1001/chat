@@ -1,0 +1,6 @@
+{
+  "name": "chat application",
+  "description": "chat application",
+  "success_url": "/",
+  "keywords": ["node", "express", "socket.io", "realtime", "websocket"]
+}

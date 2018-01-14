@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 13px Helvetica, Arial;
+            background-color: #999;
+            color: black;
+        }
+
+        form {
+            background: #000;
+            padding: 3px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        form input {
+            border: 0;
+            padding: 10px;
+            width: 90%;
+            margin-right: 0.5%;
+            background-color: #333;
+            color: white;
+        }
+
+        form button {
+            width: 9%;
+            background-color: #777;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #messages {
+            list-style-type: none;
+            font-size: 20px;
+            margin: 0;
+            padding: 0;
+        }
+
+        #messages li {
+            padding: 5px 10px;
+        }
+
+        #messages li:nth-child(odd) {
+            background: #eee;
+        }
+
+        #messages {
+            margin-bottom: 40px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media screen and (max-width: 580px) {
+            form button {
+                border: none;
+                width: inherit;
+            }
+            form input {
+                width: 100%;
+            }
+        }
+    </style>
+    <title>Chat!</title>
+
+</head>
+
+<body>
+    <ul id="messages"></ul>
+    <form action="">
+        <input id="m" autocomplete="off" placeholder="Start typing..." />
+        <button>
+            <i class="fa fa-paper-plane 3x" aria-hidden="true"></i>
+        </button>
+    </form>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+
+        $(function () {
+            var socket = io();
+            $('form').submit(function () {
+                socket.emit('chat message', $('#m').val());
+                $('#m').val('');
+                return false;
+            });
+
+            socket.on('chat message', function (msg) {
+                $('#messages').append($('<li>').text('Anonymous: ' + msg));
+                window.scrollTo(0, document.body.scrollHeight);
+            });
+        });
+
+        window.addEventListener('keydown', function (event) {
+            if (event.defaultPrevented) return;
+            if (event.key === 'ArrowDown') {
+                var are_you_sure = confirm("Are you sure you want to clear all messages?");
+                if (are_you_sure) {
+                    $('li').remove();
+                } else {
+                    return;
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>
