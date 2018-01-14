@@ -4,6 +4,7 @@
   "description": "chat application",
   "dependencies": {
     "express": "^4.15.2",
+    "helmet": "^3.9.0",
     "nodemon": "^1.14.11",
     "socket.io": "^1.7.4"
   },

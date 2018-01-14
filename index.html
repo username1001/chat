@@ -10,6 +10,11 @@
             box-sizing: border-box;
         }
 
+        #time {
+            text-align: center;
+            padding-bottom: 1em;
+        }
+
         body {
             font: 13px Helvetica, Arial;
             background-color: #999;
@@ -65,10 +70,6 @@
             margin-bottom: 40px;
         }
 
-        .hidden {
-            display: none;
-        }
-
         @media screen and (max-width: 480px) {
             form button {
                 border: none;
@@ -86,6 +87,7 @@
 </head>
 
 <body>
+    <div id="time"></div>
     <ul id="messages"></ul>
     <!-- <i class="fa fa-trash" aria-hidden="true" id="trash"></i> -->
     <form action="">
@@ -97,7 +99,7 @@
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-
+        'use strict';
         $(function () {
             var socket = io();
             $('form').submit(function () {
@@ -118,9 +120,29 @@
                 if (are_you_sure) {
                     $('li').remove();
                 }
-                return;
             }
         });
+
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+
+        function startTime() {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+            t = setTimeout(function () {
+                startTime()
+            }, 500);
+        }
+        startTime();
 
     </script>
 </body>
