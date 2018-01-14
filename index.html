@@ -42,6 +42,10 @@
             cursor: pointer;
         }
 
+        form button:hover {
+            background-color: #888;
+        }
+
         #messages {
             list-style-type: none;
             font-size: 20px;
@@ -117,18 +121,6 @@
                 return;
             }
         });
-
-        function getAllRoomMembers(room, _nsp) {
-            var roomMembers = [];
-            var nsp = typeof _nsp !== "string" ? "/" : _nsp;
-
-            for (var member in io.nsps[nsp].adapter.rooms[room]) {
-                roomMembers.push(member);
-            }
-
-            console.log(roomMembers);
-        }
-
 
     </script>
 </body>
