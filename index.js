@@ -16,9 +16,9 @@ io.on("connection", function(socket) {
   });
 });
 
-io.of("/").clients((error, clients) => {
+io.clients((error, clients) => {
   if (error) throw error;
-  console.log(clients);
+  console.log(clients); // => [6em3d4TJP8Et9EMNAAAA, G5p55dHhGgUnLUctAAAB]
 });
 
 http.listen(port, function() {
