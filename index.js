@@ -16,6 +16,11 @@ io.on("connection", function(socket) {
   });
 });
 
+io.of("/").clients((error, clients) => {
+  if (error) throw error;
+  console.log(clients);
+});
+
 http.listen(port, function() {
   console.log("listening on *:" + port);
 });
