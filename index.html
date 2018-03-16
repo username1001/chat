@@ -8,7 +8,118 @@
     <meta name="description" content="Live chat built with socket.io and node.js. Messages aren't saved, and you're given the name 'Anonymous'.">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-     #note,#time{text-align:center}form button,form input{color:#fff;padding:10px}#note i,form button{border:none;cursor:pointer}*{margin:0;padding:0;box-sizing:border-box}body{font:13px Helvetica,Arial;background-color:#999;color:#000}#time{padding-bottom:1em}#note{margin:0 auto 6px;width:50%;background-color:#FFD;box-shadow:0 0 2em #000;font-family:monospace;padding:4px}#note i{float:right;color:#3b4045;overflow:hidden;padding-top:0}#note i:hover{color:#999}form{background:#000;padding:5px;position:fixed;bottom:0;width:100%}form input{border:0;width:85%;background-color:#333}form button{width:12%;background-color:#777}form button:hover{background-color:#888}#trash{color:#fff;cursor:pointer;padding-bottom:5px}#trash:hover{color:#b40000}#messages{list-style-type:none;margin:0 0 40px;padding:0}#messages li{padding:5px 10px;font-size:15px}#messages li:nth-child(odd){background:#eee}@media screen and (max-width:480px){form button{border:none;width:inherit;padding:15px}form input{width:100%;padding:20px}}
+        #note,
+        #time {
+            text-align: center
+        }
+
+        form button,
+        form input {
+            color: #fff;
+            padding: 10px
+        }
+
+        #note i,
+        form button {
+            border: none;
+            cursor: pointer
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font: 13px Helvetica, Arial;
+            background-color: #999;
+            color: #000
+        }
+
+        #time {
+            padding-bottom: 1em
+        }
+
+        #note {
+            margin: 0 auto 6px;
+            width: 50%;
+            background-color: #FFD;
+            box-shadow: 0 0 2em #000;
+            font-family: monospace;
+            padding: 4px
+        }
+
+        #note i {
+            float: right;
+            color: #3b4045;
+            overflow: hidden;
+            padding-top: 0
+        }
+
+        #note i:hover {
+            color: #999
+        }
+
+        form {
+            background: #000;
+            padding: 5px;
+            position: fixed;
+            bottom: 0;
+            width: 100%
+        }
+
+        form input {
+            border: 0;
+            width: 85%;
+            background-color: #333
+        }
+
+        form button {
+            width: 12%;
+            background-color: #777
+        }
+
+        form button:hover {
+            background-color: #888
+        }
+
+        #trash {
+            color: #fff;
+            cursor: pointer;
+            padding-bottom: 5px
+        }
+
+        #trash:hover {
+            color: #b40000
+        }
+
+        #messages {
+            list-style-type: none;
+            margin: 0 0 40px;
+            padding: 0
+        }
+
+        #messages li {
+            padding: 5px 10px;
+            font-size: 15px;
+        }
+
+        #messages li:nth-child(odd) {
+            background: #eee;
+        }
+
+        @media screen and (max-width:480px) {
+            form button {
+                border: none;
+                width: inherit;
+                padding: 15px
+            }
+            form input {
+                width: 100%;
+                padding: 20px
+            }
+        }
     </style>
     <title>Chat!</title>
 
@@ -48,22 +159,22 @@
     <script>
         'use strict';
         $(function () {
-            var socket = io();
-            $('form').submit(function () {
+            const socket = io();
+            $('form').submit(() => {
                 socket.emit('chat message', $('#m').val());
                 $('#m').val('');
                 return false;
             });
-            socket.on('chat message', function (msg) {
+            socket.on('chat message', (msg) => {
                 if (msg.replace(/^\s+|\s+$/g, '').length === 0) return;
                 $('#messages').append($('<li>').text(`Anonymous: ${msg}`));
                 window.scrollTo(0, document.body.scrollHeight);
             });
         });
 
-        window.addEventListener('keydown', function (event) {
+        window.addEventListener('keydown', (event) => {
             if (event.key === 'ArrowDown') {
-                var are_you_sure = confirm('Are you sure you want to delete all messages?');
+                const are_you_sure = confirm('Are you sure you want to delete all messages?');
                 if (are_you_sure) {
                     $('li').remove();
                 }
@@ -78,23 +189,24 @@
         }
 
         (function startTime() {
-            var today = new Date();
-            var hours = today.getHours();
-            var minutes = today.getMinutes();
-            var seconds = today.getSeconds();
+            let today = new Date();
+            let hours = today.getHours();
+            let minutes = today.getMinutes();
+            let seconds = today.getSeconds();
             minutes = checkTime(minutes);
             seconds = checkTime(seconds);
             document.getElementById('time').innerHTML = `${hours}:${minutes}:${seconds}`;
-            var time = setTimeout(function () {
+            let time = setTimeout(() => {
                 startTime()
             }, 500);
         }());
 
-        $('#close').on('click', function () {
+        $('#close').on('click', () => {
             $('#note').remove();
         });
-        $('#trash').click(function () {
-            var deleteAll = confirm('Are you sure you want to delete all messages?');
+
+        $('#trash').click(() => {
+            const deleteAll = confirm('Are you sure you want to delete all messages?');
             if (deleteAll) {
                 $('li').remove();
             }
