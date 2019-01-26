@@ -2,6 +2,9 @@
   "name": "chat-app",
   "version": "0.0.1",
   "description": "chat application",
+  "engines": {
+    "node": "8.10.0"
+  }
   "dependencies": {
     "express": "^4.15.2",
     "helmet": "^3.9.0",
